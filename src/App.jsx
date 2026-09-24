@@ -1,7 +1,7 @@
 import './App.css'
 import Hero from './components/Hero'
 import Nabvar from './components/Nabvar'
-import ProductItem from './components/product/ProductItem'
+import Product from './components/product/Product'
 
 function App() {
   
@@ -13,7 +13,7 @@ function App() {
       </header>
       <main>
         <Hero />
-        <ProductItem />
+        <Product />
       </main>
       
     </>

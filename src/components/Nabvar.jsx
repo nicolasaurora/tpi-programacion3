@@ -8,9 +8,9 @@ const Nabvar = () => {
         <Container fluid className="position-relative px-0">
           <Navbar.Brand className="ms-3" href="#home">Logo de la marca</Navbar.Brand>
           <Nav className="position-absolute start-50 translate-middle-x gap-4">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href="#home">Inicio</Nav.Link>
+            <Nav.Link href="#products">Productos</Nav.Link>
+            <Nav.Link href="#about">Sobre nosotros</Nav.Link>
           </Nav>
         </Container>
     </Navbar>
