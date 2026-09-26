@@ -18,7 +18,7 @@ const Product = () => {
             lg={3}       
             className="mb-4 d-flex"> 
 
-                <ProductItem product={product} />
+              <ProductItem product={product} />
           </Col>
         ))}   
       </Row>

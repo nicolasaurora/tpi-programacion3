@@ -1,4 +1,9 @@
 body {
     background-color: rgb(23, 23, 75);
     color: white;
+    font-family: "Montserrat", sans-serif;;
+}
+
+h1, h2 {
+  font-family: "Orbitron", sans-serif;
 }
