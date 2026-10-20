@@ -48,10 +48,11 @@ const Login = ( { onLogin } ) => {
 
 
     return (
-        <Card className="mt-5 mx-3 p-3 px-5 shadow">
+        <main className="login-page">
+        <Card className="login-card p-3 px-5 shadow border-0">
             <Card.Body>
                 <Row className="mb-2">
-                    <h5>¡Bienvenido/a a Point Hardware!</h5>
+                    <h5 className="login-title">¡Bienvenido a Point Hardware!</h5>
                 </Row>
                 <Form onSubmit={handleSubmit}>
                     <FormGroup className="mb-4">
@@ -91,6 +92,7 @@ const Login = ( { onLogin } ) => {
                 </Form>
             </Card.Body>
         </Card>
+        </main>
     );
 }
 
