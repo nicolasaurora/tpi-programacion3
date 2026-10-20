@@ -1,4 +1,3 @@
-import React from 'react'
 import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import logo from '../assets/images/ph-celeste.png';
