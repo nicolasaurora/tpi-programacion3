@@ -4,8 +4,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '../assets/images/ph-completo-fondo-blanco.png';
 import { Outlet } from 'react-router';
 import { useNavigate } from 'react-router';
+import { useContext } from 'react';
+import { AuthenticationContext } from './services/auth.context';
 
-const CustomNavbar = ( { onLogout } ) => {
+const CustomNavbar = () => {
   const navigate = useNavigate()
 
   const handleNavHome = () => {
@@ -20,8 +22,11 @@ const CustomNavbar = ( { onLogout } ) => {
     navigate('aboutus') // Tapa el tema del focus en los links
   }
 
+  const { handleUserLogout } =useContext(AuthenticationContext)
+
   const handleLogout = () => {
-    onLogout()
+    handleUserLogout()
+    navigate('/login')
   }
 
   return (
