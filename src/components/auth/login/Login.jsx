@@ -2,8 +2,12 @@ import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useState } from 'react'
 import { useRef } from 'react'
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { AuthenticationContext } from "../../services/auth.context";
+import { errorToast, successToast } from "../../notifications/Notifications";
+import { validateEmail, validatePassword, loginUser } from "../auth.services";
 
-const Login = ( { onLogin } ) => {
+const Login = () => {
     const navigate = useNavigate()
 
     const [email, setEmail] = useState('')
@@ -25,25 +29,44 @@ const Login = ( { onLogin } ) => {
         setErrors({...errors, password: false})
     }
 
+    const { handleUserLogin } = useContext(AuthenticationContext)
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (!email.length) {
-            alert('Email Vacio')
+        if (!email.length || !validateEmail(email)) {
+            errorToast('email invalido')
             setErrors({...errors, email: true})
+            emailRef.current.focus()
             return
         }
 
-        else if (!password.length || password.length < 7) {
-            alert('Contraseña inválida')
+        else if (!password.length || !validatePassword(password, 7, null, true, true)) {
+            errorToast('Contraseña Invalida')
             setErrors({...errors, password: true})
+            passwordRef.current.focus()
             return
         }
 
         setErrors({email: false, password: false})
-        alert(`El email es ${email} y la contraseña es ${password}`)
-        onLogin()
-        navigate('/home')
+
+
+        // Fecth a Backend
+
+        loginUser(email, password, 
+            token => {
+                handleUserLogin(token)
+                successToast('¡Bienvenido/a de nuevo!')
+                navigate('/home')
+            },
+            err => errorToast(err.message)
+        )
+    }
+
+    // Nav a Registro
+
+    const handleNavRegister = () => {
+        navigate('/register')
     }
 
 
@@ -90,6 +113,13 @@ const Login = ( { onLogin } ) => {
                         </Col>
                     </Row>
                 </Form>
+                <hr className="my-4" />
+                <p className="text-center mb-0">
+                    ¿No tenés cuenta?{' '}
+                    <Button variant="link" className="p-0 align-baseline" onClick={handleNavRegister}>
+                        Registrate
+                    </Button>
+                </p>
             </Card.Body>
         </Card>
         </main>
