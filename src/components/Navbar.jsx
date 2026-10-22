@@ -1,15 +1,24 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import logo from '../assets/images/ph-completo-fondo-blanco.png';
 import { Outlet } from 'react-router';
 import { useNavigate } from 'react-router';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthenticationContext } from './services/auth.context';
 
 const CustomNavbar = () => {
   const navigate = useNavigate()
   const { role } = useContext(AuthenticationContext)
+  const [isCompact, setIsCompact] = useState(false)
+
+  useEffect(() => {
+    const updateNavbar = () => setIsCompact(window.scrollY > 40)
+
+    updateNavbar()
+    window.addEventListener('scroll', updateNavbar)
+
+    return () => window.removeEventListener('scroll', updateNavbar)
+  }, [])
 
   const handleNavHome = () => {
     navigate('home') // Tapa el tema del focus en los links
@@ -40,17 +49,13 @@ const CustomNavbar = () => {
 
   return (
     <>
-    <Navbar bg="white" data-bs-theme="white" className='p-auto'>
-        <Container fluid className="position-relative px-0">
-          <Navbar.Brand className="ms-3" href="#home">
-            <img 
-              src={logo} 
-              alt="Point Hardware"
-              width={110}
-              height={70} 
-            />
-          </Navbar.Brand>
-          <Nav className="position-absolute start-50 translate-middle-x gap-4">
+    <Navbar
+      data-bs-theme="dark"
+      fixed="top"
+      className={`site-navbar ${isCompact ? 'site-navbar--compact' : ''}`}
+    >
+        <Container fluid className="px-0">
+          <Nav className="w-100 justify-content-center gap-4">
             <Nav.Link onClick={handleNavHome}>Inicio</Nav.Link>
             {
               role !== 'admin' ? <Nav.Link onClick={handleNavProducts}>Productos</Nav.Link>
@@ -64,7 +69,9 @@ const CustomNavbar = () => {
           </Nav>
         </Container>
     </Navbar>
-    <Outlet/>
+    <div className={`site-navbar-content ${isCompact ? 'site-navbar-content--compact' : ''}`}>
+      <Outlet/>
+    </div>
     </>
   )
 }

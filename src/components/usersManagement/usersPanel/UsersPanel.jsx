@@ -46,7 +46,7 @@
                 changedUser,
                 () => {
                     successToast(`El Usuario '${toChangeUser.name}' ha sido editado con éxito`),
-                    navigate('/supeadmin/users'),
+                    navigate('/supeadmin/users')
                 },
                 err => {
                     errorToast(err.message)}

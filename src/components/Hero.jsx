@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
-import logo from '../assets/images/ph-celeste.png';
+import logo from '../assets/images/ph-completo-fondo-blanco.png';
 
 
 
@@ -14,13 +14,13 @@ const Hero = () => {
 
   return (
     <>
-      <section className='min-vh-80 d-flex text-center align-items-center justify-content-top flex-column'>
+      <section class="hero-section-title" className='min-vh-80 d-flex text-center align-items-center justify-content-top flex-column'>
 
         <img 
           src={logo} 
           alt="Logo Point Hardware"
-          width={600}
-          height={200} 
+          width={500}
+          height={250} 
         />
         <h3>Potenciá tu mundo, componente por componente.</h3>
         <p>Somos una tienda especializada en tecnología y componentes de PC. Ofrecemos productos confiables para que armes, mejores y disfrutes tu equipo al máximo.</p>
