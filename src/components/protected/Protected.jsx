@@ -3,10 +3,14 @@ import { useContext } from "react";
 import { AuthenticationContext } from "../services/auth.context";
 import { isTokenValid } from "../auth/auth.helpers"
 
-const Protected = () => {
+const Protected = ( {allowedRoles} ) => {
     const { token } = useContext(AuthenticationContext)
+    const { role } = useContext(AuthenticationContext)
+
     if (!isTokenValid(token))
         return <Navigate to='/login' replace/>
+    if (allowedRoles && !allowedRoles.includes(role))
+        return <Navigate to='/notfound ' replace/>
     return <Outlet/>
 }
 

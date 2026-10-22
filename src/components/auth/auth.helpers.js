@@ -15,3 +15,13 @@ export const isTokenValid = (token) => {
         return false
     }
 } 
+
+export const getUserRole = (token) => {
+    if (!token) return null
+
+    try {
+        return jwtDecode(token).role
+    } catch {
+        return null
+    }
+}

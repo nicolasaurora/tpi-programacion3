@@ -1,4 +1,5 @@
-const baseUrl = 'http://localhost:3000' // Hay que pasarla al .env
+import { BASE_URL } from "../services/config"
+
 
 export const validateString = (str, minLength, maxLength) => {
     if (typeof str !== 'string')
@@ -35,7 +36,7 @@ export const validatePassword = (password, minLength, maxLength, needsUpperCase,
 // Fetchs
 
 export const registerUser = (newUser, onSuccess, onError) => {
-    fetch(`${baseUrl}/usuarios`, {
+    fetch(`${BASE_URL}/users`, {
         headers: {
             'Content-type' : 'application/json',
         },
@@ -54,7 +55,7 @@ export const registerUser = (newUser, onSuccess, onError) => {
 }
 
 export const loginUser = (email, password, onSuccess, onError) => {
-    fetch(`${baseUrl}/login`, {
+    fetch(`${BASE_URL}/login`, {
         headers: {
             'Content-type' : 'application/json',
         },
