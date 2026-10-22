@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { AuthenticationContext } from "./auth.context";
-
-const TOKEN_KEY = 'tpi-proy-prog-3'
+import { getUserRole } from "../auth/auth.helpers";
+import { TOKEN_KEY } from "./config";
 
 
 export const AuthenticationContextProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem(TOKEN_KEY))
+
+    const role = getUserRole(token)
 
     const handleUserLogin = (token) => {
         localStorage.setItem(TOKEN_KEY, token)
@@ -18,7 +20,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
 
     return (
-        <AuthenticationContext value={{ token, handleUserLogin, handleUserLogout }}>
+        <AuthenticationContext value={{ token, role, handleUserLogin, handleUserLogout }}>
             {children}
         </AuthenticationContext>
     )

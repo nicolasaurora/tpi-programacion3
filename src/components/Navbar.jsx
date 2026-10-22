@@ -9,6 +9,7 @@ import { AuthenticationContext } from './services/auth.context';
 
 const CustomNavbar = () => {
   const navigate = useNavigate()
+  const { role } = useContext(AuthenticationContext)
 
   const handleNavHome = () => {
     navigate('home') // Tapa el tema del focus en los links
@@ -18,8 +19,16 @@ const CustomNavbar = () => {
     navigate('products') // Tapa el tema del focus en los links
   }
 
+  const handleNavAdminProducts = () => {
+    navigate('admin/products')
+  }
+
   const handleNavAboutUs = () => {
     navigate('aboutus') // Tapa el tema del focus en los links
+  }
+
+  const handleNavUsers = () => {
+    navigate('superadmin/users') // Tapa el tema del focus en los links
   }
 
   const { handleUserLogout } =useContext(AuthenticationContext)
@@ -43,7 +52,13 @@ const CustomNavbar = () => {
           </Navbar.Brand>
           <Nav className="position-absolute start-50 translate-middle-x gap-4">
             <Nav.Link onClick={handleNavHome}>Inicio</Nav.Link>
-            <Nav.Link onClick={handleNavProducts}>Productos</Nav.Link>
+            {
+              role !== 'admin' ? <Nav.Link onClick={handleNavProducts}>Productos</Nav.Link>
+              : <Nav.Link onClick={handleNavAdminProducts}>Gestionar Productos</Nav.Link>
+              }
+            {
+              role === 'superadmin' && <Nav.Link onClick={handleNavUsers}>Gestionar Usuarios</Nav.Link>
+            }
             <Nav.Link onClick={handleNavAboutUs}>Sobre nosotros</Nav.Link>
             <Nav.Link onClick={handleLogout}>Cerrar Sesion</Nav.Link>
           </Nav>

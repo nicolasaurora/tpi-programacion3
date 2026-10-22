@@ -10,16 +10,18 @@ const Register = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [name, setName] = useState('')
+    const [checkPassword, setCheckPassword] = useState('')
+    const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
 
 
     const emailRef = useRef(null)
+    const checkPasswordRef = useRef(null)
     const passwordRef = useRef(null)
-    const nameRef = useRef(null)
+    const firstNameRef = useRef(null)
     const lastNameRef = useRef(null)
 
-    const [errors, setErrors] = useState({email: false, password: false, name: false, lastName: false})
+    const [errors, setErrors] = useState({email: false, password: false, checkPassword, firstName: false, lastName: false})
 
     const handleEmail = (e) => {
         setEmail(e.target.value)
@@ -29,8 +31,12 @@ const Register = () => {
         setPassword(e.target.value)
         setErrors({...errors, password: false})
     }
-    const handleName = (e) => {
-        setName(e.target.value)
+        const handleCheckPassword = (e) => {
+        setCheckPassword(e.target.value)
+        setErrors({...errors, checkPassword: false})
+    }
+    const handleFirstName = (e) => {
+        setFirstName(e.target.value)
         setErrors({...errors, name: false})
     }
     const handleLastName = (e) => {
@@ -62,10 +68,17 @@ const Register = () => {
             return
         }
 
-        else if (!name.length || !validateString(name, 1, 50)) {
+        else if (password !== checkPassword) {
+            errorToast('Las contraseñas no coinciden')
+            setErrors({...errors, checkPassword:true})
+            checkPassword.current.focus()
+            return
+        }
+
+        else if (!firstName.length || !validateString(firstName, 1, 50)) {
             errorToast('Nombre inválido')
             setErrors({...errors, name: true})
-            nameRef.current.focus()
+            firstNameRef.current.focus()
             return
         }
 
@@ -76,20 +89,20 @@ const Register = () => {
             return
         }
 
-        setErrors({email: false, password: false, name: false, lastName: false})
+        setErrors({email: false, checkPassword, password: false, firstName: false, lastName: false})
 
 
         // Envio a Backend
         const newUser = {
             email,
             password,
-            nombre: name,
-            apellido: lastName
+            firstName,
+            lastName
         }
 
         registerUser(newUser, 
             () => {
-                successToast(`¡Bienvenido, ${newUser.nombre}`)
+                successToast(`¡Bienvenido, ${newUser.firstName}`)
                 handleNavLogin()
             },
             err => errorToast(err.message)
@@ -134,14 +147,27 @@ const Register = () => {
                         ?''
                         :<div>Por favor, completa el campo 'contraseña'</div>}
                     </FormGroup>
-                                        <FormGroup className="mb-4">
+                    <FormGroup className="mb-4">
+                        <Form.Control
+                            type="password"
+                            placeholder="Repetir Contraseña"
+                            value={checkPassword}
+                            className={errors.email && 'border border-danger'} 
+                            onChange={handleCheckPassword}
+                            ref={checkPasswordRef}
+                        />
+                        {!errors.checkPassword
+                        ?''
+                        :<div>Por favor, vuelve a escribir la contraseña</div>}
+                    </FormGroup>
+                    <FormGroup className="mb-4">
                         <Form.Control
                             type="text"
                             placeholder="Ingresar nombre"
-                            value={name}
+                            value={firstName}
                             className={errors.name && 'border border-danger'} 
-                            onChange={handleName}
-                            ref={nameRef}
+                            onChange={handleFirstName}
+                            ref={firstNameRef}
                         />
                         {!errors.name
                         ?''
