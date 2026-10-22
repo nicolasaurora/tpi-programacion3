@@ -10,6 +10,8 @@
         const location = useLocation()
         const navigate = useNavigate()
 
+        const myId = 1 // TEMPORAL 
+
 
         // Usuarios desde la DB
         const [usersList, setUsersList] = useState([])
@@ -24,35 +26,22 @@
         }, [location])
 
         // Editar Usuario
-        const [selectedUser, setSelectedUser] = useState(null)
-
-        const handleSelectUser = (user) => {
-            setSelectedUser(user)
-        }
-
-        const handleChangeRole = () => {
-
-        }
-        
-        const handleEditUser = (toChangeUser) => {
-
-
+        const handleChangeRole = (user, e) => {
             const changedUser = {
-                id: toChangeUser.id,
-                role: toChangeUser.role,
+                id: user.id,
+                role: user.role
             }
 
             updateUser(
                 changedUser,
                 () => {
-                    successToast(`El Usuario '${toChangeUser.name}' ha sido editado con éxito`),
-                    navigate('/supeadmin/users')
+                    successToast(`El Usuario '${changedUser.name}' ha sido editado con éxito`)
                 },
                 err => {
-                    errorToast(err.message)}
+                    errorToast(err.message)
+                }
             )
-            }
-
+        }
 
         // Eliminar Usuario
         const [toDeleteUser, setToDeleteUser] = useState(null)
@@ -92,6 +81,8 @@
                         <th>Nombre</th>
                         <th className="text-end">Apellido</th>
                         <th className="text-center">email</th>
+                        <th className="text-center">Rol</th>
+                        <th className="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,13 +104,6 @@
                             </Form.Select>
                         </td>
                             <td className="text-end">
-                                <Button
-                                    variant="outline-primary"
-                                    size="sm"
-                                    className="me-2"
-                                    onClick={() => handleSelectUser(user)}>
-                                    Editar
-                                </Button>
                                 <Button
                                     variant="outline-danger"
                                     size="sm"
