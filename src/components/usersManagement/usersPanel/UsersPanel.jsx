@@ -4,17 +4,22 @@
     import { useLocation, useNavigate } from 'react-router';
     import { errorToast, successToast } from '../../notifications/Notifications.jsx';
     import DeleteUserModal from '../deleteUserModal/DeleteUserModal.jsx'
-    import { getUsers, updateUser, deleteUser } from '../users.services.js';
+    import { getUsers, updateUserRole, deleteUser } from '../users.services.js';
+    import { useContext } from 'react';
+    import { AuthenticationContext } from '../../services/auth.context.jsx'
 
     const Users = () => {
         const location = useLocation()
         const navigate = useNavigate()
 
-        const myId = 1 // TEMPORAL 
 
 
         // Usuarios desde la DB
         const [usersList, setUsersList] = useState([])
+
+        const { userId } = useContext(AuthenticationContext) 
+
+
 
         useEffect(() => {
             if (location.pathname === '/superadmin/users') {
@@ -26,16 +31,19 @@
         }, [location])
 
         // Editar Usuario
-        const handleChangeRole = (user, e) => {
+        const handleChangeRole = (user, role) => {
             const changedUser = {
                 id: user.id,
-                role: user.role
+                role: role,
+                name: user.firstName
             }
 
-            updateUser(
+            updateUserRole(
                 changedUser,
                 () => {
-                    successToast(`El Usuario '${changedUser.name}' ha sido editado con éxito`)
+                    successToast(`El Usuario '${changedUser.name}' ahora es ${role}`),
+                    setUsersList(prevUsersList => 
+                        prevUsersList.map(oldUser => oldUser.id === user.id ? {...oldUser, role: role} : oldUser))
                 },
                 err => {
                     errorToast(err.message)
@@ -55,7 +63,7 @@
             deleteUser(
                 toDeleteUser.id,
                 () => {
-                    successToast(`El usuario '${toDeleteUser.name}' ha sido borrado con éxito`)
+                    successToast(`El usuario '${toDeleteUser.firstName} ${toDeleteUser.lastName}' ha sido borrado con éxito`)
                     setToDeleteUser(null)
                     navigate('/superadmin/users')
                 },
@@ -95,8 +103,8 @@
                             <Form.Select
                                 size="sm"
                                 value={user.role}
-                                onChange={(e) => handleChangeRole(user, e.target.value)}
-                                disabled={user.id === myId}
+                                onChange={(e) => {handleChangeRole(user, e.target.value)}}
+                                disabled={user.id === userId}
                             >
                                 <option value="user">Usuario</option>
                                 <option value="admin">Administrador</option>

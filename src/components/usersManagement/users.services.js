@@ -54,3 +54,23 @@ export const deleteUser = (userId, onSuccess, onError) => {
     .then(onSuccess)
     .catch(onError)
 }
+
+export const updateUserRole = (changedUser, onSuccess, onError) => {
+    fetch(`${BASE_URL}/users/${changedUser.id}/role`, {
+        headers: {
+            'Authorization' : `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+            'Content-type' : 'application/json',
+        },
+        method: 'PUT',
+        body: JSON.stringify(changedUser)
+    })
+    .then(async res => {
+        if(!res.ok) {
+            const errData = await res.json()
+            throw new Error(errData.message || 'No se pudo editar el Usuario')
+        }
+        return res.json()
+    })
+    .then(onSuccess)
+    .catch(onError)
+}
