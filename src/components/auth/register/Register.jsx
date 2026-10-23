@@ -1,9 +1,10 @@
-import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, FormGroup, Row, InputGroup } from "react-bootstrap";
 import { useState } from 'react'
 import { useRef } from 'react'
 import { useNavigate } from "react-router";
 import { errorToast, successToast } from "../../notifications/Notifications";
 import { validateEmail, validatePassword, registerUser, validateString } from "../auth.services";
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 const Register = () => {
     const navigate = useNavigate()
@@ -22,6 +23,8 @@ const Register = () => {
     const lastNameRef = useRef(null)
 
     const [errors, setErrors] = useState({email: false, password: false, checkPassword, firstName: false, lastName: false})
+
+    const [showPassword, setShowPassword] = useState(null)
 
     const handleEmail = (e) => {
         setEmail(e.target.value)
@@ -42,6 +45,13 @@ const Register = () => {
     const handleLastName = (e) => {
         setLastName(e.target.value)
         setErrors({...errors, lastName: false})
+    }
+    
+    const handleShowPassword = () => {
+        if (showPassword)
+            setShowPassword(null)
+        else
+            setShowPassword(true)
     }
 
     // Navigate Login
@@ -135,30 +145,50 @@ const Register = () => {
                         :<div>Por favor, completa el campo 'email'</div>}
                     </FormGroup>
                     <FormGroup className="mb-4">
-                        <Form.Control
-                            type="password"
-                            placeholder="Ingresar contraseña"
-                            value={password}
-                            onChange={handlePassword}
-                            ref={passwordRef}
-                            className={errors.password && 'border border-danger'} 
-                        />
+                        <InputGroup>
+                            <Form.Control
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Ingresar contraseña"
+                                value={password}
+                                onChange={handlePassword}
+                                ref={passwordRef}
+                                className={errors.password && 'border border-danger'}
+                            />
+                            <Button
+                                variant="outline-secondary"
+                                type="button"
+                                onClick={handleShowPassword}
+                                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </Button>
+                        </InputGroup>
                         {!errors.password
                         ?''
                         :<div>Por favor, completa el campo 'contraseña'</div>}
                     </FormGroup>
                     <FormGroup className="mb-4">
-                        <Form.Control
-                            type="password"
-                            placeholder="Repetir Contraseña"
-                            value={checkPassword}
-                            className={errors.email && 'border border-danger'} 
-                            onChange={handleCheckPassword}
-                            ref={checkPasswordRef}
-                        />
+                        <InputGroup>
+                            <Form.Control
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Repetir contraseña"
+                                value={checkPassword}
+                                onChange={handleCheckPassword}
+                                ref={checkPasswordRef}
+                                className={errors.checkPassword && 'border border-danger'}
+                            />
+                            <Button
+                                variant="outline-secondary"
+                                type="button"
+                                onClick={handleShowPassword}
+                                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </Button>
+                        </InputGroup>
                         {!errors.checkPassword
                         ?''
-                        :<div>Por favor, vuelve a escribir la contraseña</div>}
+                        :<div>Las contraseñas no coinciden</div>}
                     </FormGroup>
                     <FormGroup className="mb-4">
                         <Form.Control
