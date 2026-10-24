@@ -12,6 +12,10 @@ import { ToastContainer } from 'react-toastify'
 import Register from './components/auth/register/Register'
 import ProductForm from './components/ProductsManagement/productForm/ProductForm'
 import Users from './components/usersManagement/usersPanel/UsersPanel'
+import Cart from './components/cart/Cart'
+import OrderTicket from './components/orders/OrderTicket'
+import OrderHistory from './components/orders/OrderHistory'
+import AdminOrders from './components/orders/AdminOrders'
 
 function App() {
   
@@ -29,9 +33,13 @@ function App() {
 
               <Route path='/home' element={<Hero/>}></Route>
               <Route path='/products' element={<Product/>}></Route>
+              <Route path='/cart' element={<Cart/>}></Route>
+              <Route path='/orders/my-orders' element={<OrderHistory/>}></Route>
+              <Route path='/orders/:id' element={<OrderTicket/>}></Route>
               <Route element={<Protected allowedRoles={['admin', 'superadmin']} />}>
                 <Route path='/admin/products' element={<AdminProducts/>}></Route>
                 <Route path='admin/products/new-product' element={<ProductForm/>}></Route>
+                <Route path='/admin/orders' element={<AdminOrders/>}></Route>
               </Route>
               <Route element={<Protected allowedRoles={['superadmin']} />}>
                 <Route path='/superadmin/users' element={<Users/>}></Route>

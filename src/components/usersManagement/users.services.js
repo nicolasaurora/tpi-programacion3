@@ -61,7 +61,7 @@ export const updateUserRole = (changedUser, onSuccess, onError) => {
             'Authorization' : `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
             'Content-type' : 'application/json',
         },
-        method: 'PUT',
+        method: 'PATCH',
         body: JSON.stringify(changedUser)
     })
     .then(async res => {
@@ -69,6 +69,7 @@ export const updateUserRole = (changedUser, onSuccess, onError) => {
             const errData = await res.json()
             throw new Error(errData.message || 'No se pudo editar el Usuario')
         }
+        
         return res.json()
     })
     .then(onSuccess)

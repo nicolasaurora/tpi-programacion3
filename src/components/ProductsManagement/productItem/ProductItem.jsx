@@ -1,7 +1,11 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useContext } from 'react';
+import { CartContext } from '../../services/cart.context.jsx';
 
 const ProductItem = ( {product} ) => {
+  const { addToCart } = useContext(CartContext)
+  const hasStock = Number(product.stock) > 0
 
 
   return (
@@ -15,7 +19,14 @@ const ProductItem = ( {product} ) => {
         <Card.Subtitle className='mb-2'>
           Precio: ${product.price}
         </Card.Subtitle>
-        <Button variant="primary" className='w-100 mt-auto'>Comprar</Button>
+        <Button
+          variant="primary"
+          className='w-100 mt-auto'
+          disabled={!hasStock}
+          onClick={() => addToCart(product)}
+        >
+          {hasStock ? 'Agregar al carrito' : 'Sin stock'}
+        </Button>
       </Card.Body>
     </Card>
   )
