@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, FormGroup, Row, InputGroup } from "react-bootstrap";
 import { useState } from 'react'
 import { useRef } from 'react'
 import { useNavigate } from "react-router";
@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthenticationContext } from "../../services/auth.context";
 import { errorToast, successToast } from "../../notifications/Notifications";
 import { validateEmail, validatePassword, loginUser } from "../auth.services";
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -19,6 +20,8 @@ const Login = () => {
 
     const [errors, setErrors] = useState({email: false, password: false})
 
+    const [showPassword, setShowPassword] = useState(null)
+
     const handleEmail = (e) => {
         setEmail(e.target.value)
         setErrors({...errors, email: false})
@@ -27,6 +30,13 @@ const Login = () => {
     const handlePassword = (e) => {
         setPassword(e.target.value)
         setErrors({...errors, password: false})
+    }
+
+    const handleShowPassword = () => {
+        if (showPassword)
+            setShowPassword(null)
+        else
+            setShowPassword(true)
     }
 
     const { handleUserLogin } = useContext(AuthenticationContext)
@@ -92,14 +102,24 @@ const Login = () => {
                         :<div>Por favor, completa el campo 'email'</div>}
                     </FormGroup>
                     <FormGroup className="mb-4">
-                        <Form.Control
-                            type="password"
-                            placeholder="Ingresar contraseña"
-                            value={password}
-                            onChange={handlePassword}
-                            ref={passwordRef}
-                            className={errors.password && 'border border-danger'} 
-                        />
+                        <InputGroup>
+                            <Form.Control
+                                type={showPassword ? 'text' : 'password'}
+                                placeholder="Ingresar contraseña"
+                                value={password}
+                                onChange={handlePassword}
+                                ref={passwordRef}
+                                className={errors.password && 'border border-danger'}
+                            />
+                            <Button
+                                variant="outline-secondary"
+                                type="button"
+                                onClick={handleShowPassword}
+                                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </Button>
+                        </InputGroup>
                         {!errors.password
                         ?''
                         :<div>Por favor, completa el campo 'contraseña'</div>}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AuthenticationContext } from "./auth.context";
-import { getUserRole } from "../auth/auth.helpers";
+import { getUserRole, getUserId } from "../auth/auth.helpers";
 import { TOKEN_KEY } from "./config";
 
 
@@ -8,6 +8,8 @@ export const AuthenticationContextProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem(TOKEN_KEY))
 
     const role = getUserRole(token)
+
+    const userId = getUserId(token)
 
     const handleUserLogin = (token) => {
         localStorage.setItem(TOKEN_KEY, token)
@@ -20,7 +22,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
 
     return (
-        <AuthenticationContext value={{ token, role, handleUserLogin, handleUserLogout }}>
+        <AuthenticationContext value={{ token, role, userId, handleUserLogin, handleUserLogout }}>
             {children}
         </AuthenticationContext>
     )

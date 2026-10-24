@@ -58,9 +58,11 @@ const CustomNavbar = () => {
           <Nav className="w-100 justify-content-center gap-4">
             <Nav.Link onClick={handleNavHome}>Inicio</Nav.Link>
             {
-              role !== 'admin' ? <Nav.Link onClick={handleNavProducts}>Productos</Nav.Link>
-              : <Nav.Link onClick={handleNavAdminProducts}>Gestionar Productos</Nav.Link>
-              }
+              role !== 'admin' && <Nav.Link onClick={handleNavProducts}>Productos</Nav.Link>
+            }
+            {
+              role !== 'user' && <Nav.Link onClick={handleNavAdminProducts}>Gestionar Productos</Nav.Link>
+            }
             {
               role === 'superadmin' && <Nav.Link onClick={handleNavUsers}>Gestionar Usuarios</Nav.Link>
             }

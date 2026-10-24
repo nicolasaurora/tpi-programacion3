@@ -25,3 +25,13 @@ export const getUserRole = (token) => {
         return null
     }
 }
+
+export const getUserId = (token) => {
+    if (!token) return null
+
+    try {
+        return jwtDecode(token).id
+    } catch {
+        return null
+    }
+}

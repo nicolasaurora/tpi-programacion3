@@ -4,15 +4,22 @@
     import { useLocation, useNavigate } from 'react-router';
     import { errorToast, successToast } from '../../notifications/Notifications.jsx';
     import DeleteUserModal from '../deleteUserModal/DeleteUserModal.jsx'
-    import { getUsers, updateUser, deleteUser } from '../users.services.js';
+    import { getUsers, updateUserRole, deleteUser } from '../users.services.js';
+    import { useContext } from 'react';
+    import { AuthenticationContext } from '../../services/auth.context.jsx'
 
     const Users = () => {
         const location = useLocation()
         const navigate = useNavigate()
 
 
+
         // Usuarios desde la DB
         const [usersList, setUsersList] = useState([])
+
+        const { userId } = useContext(AuthenticationContext) 
+
+
 
         useEffect(() => {
             if (location.pathname === '/superadmin/users') {
@@ -24,35 +31,25 @@
         }, [location])
 
         // Editar Usuario
-        const [selectedUser, setSelectedUser] = useState(null)
-
-        const handleSelectUser = (user) => {
-            setSelectedUser(user)
-        }
-
-        const handleChangeRole = () => {
-
-        }
-        
-        const handleEditUser = (toChangeUser) => {
-
-
+        const handleChangeRole = (user, role) => {
             const changedUser = {
-                id: toChangeUser.id,
-                role: toChangeUser.role,
+                id: user.id,
+                role: role,
+                name: user.firstName
             }
 
-            updateUser(
+            updateUserRole(
                 changedUser,
                 () => {
-                    successToast(`El Usuario '${toChangeUser.name}' ha sido editado con éxito`),
-                    navigate('/supeadmin/users')
+                    successToast(`El Usuario '${changedUser.name}' ahora es ${role}`),
+                    setUsersList(prevUsersList => 
+                        prevUsersList.map(oldUser => oldUser.id === user.id ? {...oldUser, role: role} : oldUser))
                 },
                 err => {
-                    errorToast(err.message)}
+                    errorToast(err.message)
+                }
             )
-            }
-
+        }
 
         // Eliminar Usuario
         const [toDeleteUser, setToDeleteUser] = useState(null)
@@ -66,7 +63,7 @@
             deleteUser(
                 toDeleteUser.id,
                 () => {
-                    successToast(`El usuario '${toDeleteUser.name}' ha sido borrado con éxito`)
+                    successToast(`El usuario '${toDeleteUser.firstName} ${toDeleteUser.lastName}' ha sido borrado con éxito`)
                     setToDeleteUser(null)
                     navigate('/superadmin/users')
                 },
@@ -92,6 +89,8 @@
                         <th>Nombre</th>
                         <th className="text-end">Apellido</th>
                         <th className="text-center">email</th>
+                        <th className="text-center">Rol</th>
+                        <th className="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,8 +103,8 @@
                             <Form.Select
                                 size="sm"
                                 value={user.role}
-                                onChange={(e) => handleChangeRole(user, e.target.value)}
-                                disabled={user.id === myId}
+                                onChange={(e) => {handleChangeRole(user, e.target.value)}}
+                                disabled={user.id === userId}
                             >
                                 <option value="user">Usuario</option>
                                 <option value="admin">Administrador</option>
@@ -113,13 +112,6 @@
                             </Form.Select>
                         </td>
                             <td className="text-end">
-                                <Button
-                                    variant="outline-primary"
-                                    size="sm"
-                                    className="me-2"
-                                    onClick={() => handleSelectUser(user)}>
-                                    Editar
-                                </Button>
                                 <Button
                                     variant="outline-danger"
                                     size="sm"
