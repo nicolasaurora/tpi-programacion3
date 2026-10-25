@@ -16,6 +16,7 @@ import Cart from './components/cart/Cart'
 import OrderTicket from './components/orders/OrderTicket'
 import OrderHistory from './components/orders/OrderHistory'
 import AdminOrders from './components/orders/AdminOrders'
+import AboutUs from './components/AboutUs'
 
 function App() {
   
@@ -30,9 +31,9 @@ function App() {
       <Route element={<Protected/>}>
         <Route element={<CustomNavbar/>}>
           <Route element={<Footer/>}>
-
               <Route path='/home' element={<Hero/>}></Route>
               <Route path='/products' element={<Product/>}></Route>
+              <Route path='/about-us' element={<AboutUs />}></Route>
               <Route path='/cart' element={<Cart/>}></Route>
               <Route path='/orders/my-orders' element={<OrderHistory/>}></Route>
               <Route path='/orders/:id' element={<OrderTicket/>}></Route>

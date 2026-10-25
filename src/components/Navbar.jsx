@@ -48,7 +48,7 @@ const CustomNavbar = () => {
   }
 
   const handleNavAboutUs = () => {
-    navigate('aboutus') // Tapa el tema del focus en los links
+    navigate('/about-us') // Tapa el tema del focus en los links
   }
 
   const handleNavUsers = () => {

@@ -214,6 +214,85 @@ h1, h2 {
   text-align: center;
 }
 
+.about-container {
+  margin-bottom: 4rem;
+  margin-top: 4rem;
+  max-width: 1100px;
+}
+
+.about-header {
+  margin: 0 auto 4rem;
+  max-width: 800px;
+  text-align: center;
+}
+
+.about-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.about-subtitle {
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+
+.about-lead {
+  color: #3d3d5c;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.about-section {
+  align-items: center;
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 5rem;
+}
+
+.about-content h2,
+.about-closing h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  margin-bottom: 1rem;
+}
+
+.about-content p {
+  color: #3d3d5c;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.about-image {
+  border-radius: 0.75rem;
+  box-shadow: 0 0.75rem 2rem rgba(16, 16, 61, 0.18);
+  height: 300px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.about-section--reverse .about-image {
+  order: -1;
+}
+
+.about-closing {
+  background-color: #10103d;
+  border-radius: 0.75rem;
+  color: #fff;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.about-closing h2 {
+  color: #fff;
+}
+
+.about-closing p {
+  margin: 0;
+}
+
 @media (max-width: 767px) {
   .site-navbar > .site-navbar-container {
     display: flex;
@@ -237,6 +316,28 @@ h1, h2 {
   .footer-link {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .about-container {
+    margin-top: 2.5rem;
+  }
+
+  .about-header,
+  .about-section {
+    margin-bottom: 3rem;
+  }
+
+  .about-section {
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  .about-section--reverse .about-image {
+    order: initial;
+  }
+
+  .about-image {
+    height: 240px;
   }
 
 }
