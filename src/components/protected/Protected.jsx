@@ -10,7 +10,7 @@ const Protected = ( {allowedRoles} ) => {
     if (!isTokenValid(token))
         return <Navigate to='/login' replace/>
     if (allowedRoles && !allowedRoles.includes(role))
-        return <Navigate to='/notfound ' replace/>
+        return <Navigate to='/notfound' replace/>
     return <Outlet/>
 }
 

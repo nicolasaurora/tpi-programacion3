@@ -7,12 +7,12 @@ import { AuthenticationContext } from "../../services/auth.context";
 import { errorToast, successToast } from "../../notifications/Notifications";
 import { validateEmail, validatePassword, loginUser } from "../auth.services";
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import logo from '../../../assets/images/ph-completo-fondo-blanco.png'
 
 const Login = () => {
     const navigate = useNavigate()
 
     const [email, setEmail] = useState('')
-
     const [password, setPassword] = useState('')
 
     const emailRef = useRef(null)
@@ -84,6 +84,12 @@ const Login = () => {
         <main className="login-page">
         <Card className="login-card p-3 px-5 shadow border-0">
             <Card.Body>
+                <img src={logo} 
+                alt="Logo Point Hardware"
+                width={220}
+                height={140}
+                className="d-block mx-auto"
+                />
                 <Row className="mb-2">
                     <h5 className="login-title">¡Bienvenido a Point Hardware!</h5>
                 </Row>

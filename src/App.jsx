@@ -4,7 +4,7 @@ import Hero from './components/Hero'
 import CustomNavbar from './components/Navbar'
 import Product from './components/ProductsManagement/product/Product'
 import AdminProducts from './components/ProductsManagement/adminProducts/AdminProducts'
-import { BrowserRouter, Routes, Route } from 'react-router'
+import { BrowserRouter, Navigate, Routes, Route } from 'react-router'
 import Login from './components/auth/login/Login'
 import Protected from './components/protected/Protected'
 import NotFound from './components/notFound/NotFound'
@@ -50,6 +50,7 @@ function App() {
 
       </Route>
 
+    <Route path="/" element={<Navigate to="/login" replace />} />
     <Route path='*' element={<NotFound/>}></Route>
       </Routes>
       </BrowserRouter>
