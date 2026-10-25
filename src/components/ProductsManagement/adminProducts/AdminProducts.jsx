@@ -130,7 +130,7 @@
         //
         return (
             <>
-            {productModal && <ProductForm key={selectedProduct?.id ?? 'nuevo'} ref={modalRef} onProductAdded={handleAddProduct} onShowForm={handleShowForm} product={selectedProduct} isEditing={isEditing} onProductChanged={handleEditProduct}></ProductForm>}
+            {productModal && <ProductForm key={selectedProduct ? selectedProduct.id : 'nuevo'} ref={modalRef} onProductAdded={handleAddProduct} onShowForm={handleShowForm} product={selectedProduct} isEditing={isEditing} onProductChanged={handleEditProduct}></ProductForm>}
 
             <Container className="my-4">
             <div className="d-flex justify-content-between align-items-center mb-3">
@@ -187,7 +187,7 @@
 
             <DeleteProductModal
                 show={toDeleteProduct !== null}
-                productName={toDeleteProduct?.name}
+                productName={toDeleteProduct ? toDeleteProduct.name : ''}
                 onConfirm={handleConfirmDelete}
                 onCancel={() => setToDeleteProduct(null)}
             />

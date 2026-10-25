@@ -45,8 +45,8 @@ function App() {
               <Route element={<Protected allowedRoles={['superadmin']} />}>
                 <Route path='/superadmin/users' element={<Users/>}></Route>
               </Route>
-          </Route> {/* Fin del Footer, abarca todas las páginas para que aparezca siempre */}
-        </Route> {/* Fin del Navbar, abarca todas las páginas para que aparezca siempre */}
+          </Route> 
+        </Route> 
 
       </Route>
 

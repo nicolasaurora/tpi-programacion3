@@ -21,8 +21,16 @@ export const AuthenticationContextProvider = ({ children }) => {
         setToken(null)
     }
 
+    const value = {
+        token,
+        role,
+        userId,
+        handleUserLogin,
+        handleUserLogout
+    }
+
     return (
-        <AuthenticationContext value={{ token, role, userId, handleUserLogin, handleUserLogout }}>
+        <AuthenticationContext value={value}>
             {children}
         </AuthenticationContext>
     )

@@ -20,7 +20,7 @@ export const CartContextProvider = ({ children }) => {
   }, [items])
 
   const addToCart = (product) => {
-    if (!product?.id || Number(product.stock) <= 0) return
+    if (!product || !product.id || Number(product.stock) <= 0) return
 
     setItems(currentItems => {
       const existingItem = currentItems.find(item => item.id === product.id)

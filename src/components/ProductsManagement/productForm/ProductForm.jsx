@@ -5,38 +5,35 @@ import { useNavigate } from "react-router";
 
 
 const ProductForm = ({ ref, product, onProductAdded, onShowForm, isEditing, onProductChanged }) => {
-    // Navigate
 
     const navigate = useNavigate()
-    //
-
-    // Caracteristicas Product
-    const id = product?.id ?? ''
-    const [name, setName] = useState(product?.name ?? '')
-    const [price, setPrice] = useState(product?.price ?? 0)
-    const [image, setImage] = useState(product?.image ?? '')
-    const [stock, setStock] = useState(product?.stock ?? 0)
-    const [category, setCategory] = useState(product?.category ?? '')
+    
+    const id = product ? product.id : '';
+    const [name, setName] = useState(product ? product.name : '');
+    const [price, setPrice] = useState(product ? product.price : 0);
+    const [image, setImage] = useState(product ? product.image : '');
+    const [stock, setStock] = useState(product ? product.stock : 0);
+    const [category, setCategory] = useState(product ? product.category : '');
 
 
-    const handleChangeName = (event) => {
-        setName(event.target.value)
+    const handleChangeName = (e) => {
+        setName(e.target.value)
     }
 
-    const handleChangePrice = (event) => {
-        setPrice(event.target.value)
+    const handleChangePrice = (e) => {
+        setPrice(e.target.value)
     }
 
-    const handleChangeImage = (event) => {
-        setImage(event.target.value)
+    const handleChangeImage = (e) => {
+        setImage(e.target.value)
     }
 
-    const handleChangeStock = (event) => {
-        setStock(event.target.value)
+    const handleChangeStock = (e) => {
+        setStock(e.target.value)
     }
 
-    const handleChangeCategory = (event) => {
-        setCategory(event.target.value)
+    const handleChangeCategory = (e) => {
+        setCategory(e.target.value)
     }
 
     const backToProducts = () => {
@@ -46,8 +43,8 @@ const ProductForm = ({ ref, product, onProductAdded, onShowForm, isEditing, onPr
     // Agregar Producto
 
 
-    const handleAddProduct = (event) => {
-        event.preventDefault()
+    const handleAddProduct = (e) => {
+        e.preventDefault()
 
         const productData = {
             name,
@@ -71,8 +68,8 @@ const ProductForm = ({ ref, product, onProductAdded, onShowForm, isEditing, onPr
 
 
 
-    const handleEditProduct = (event) => {
-        event.preventDefault()
+    const handleEditProduct = (e) => {
+        e.preventDefault()
 
         const productData = {
             id,
