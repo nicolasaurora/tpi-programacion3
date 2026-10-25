@@ -11,30 +11,18 @@ const formatPrice = (value) => new Intl.NumberFormat('es-AR', {
 const OrderHistory = () => {
   const navigate = useNavigate()
   const [orders, setOrders] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
     getMyOrders(
       data => {
         setOrders(data)
-        setIsLoading(false)
       },
-      requestError => {
-        setError(requestError.message)
-        setIsLoading(false)
+      Error => {
+        setError(Error.message)
       }
     )
   }, [])
-
-  if (isLoading) {
-    return (
-      <Container className="my-5 text-center">
-        <Spinner animation="border" role="status" />
-        <p className="mt-3">Cargando historial...</p>
-      </Container>
-    )
-  }
 
   if (error) {
     return (

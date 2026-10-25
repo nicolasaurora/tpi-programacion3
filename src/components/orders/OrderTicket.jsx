@@ -20,7 +20,7 @@ const OrderTicket = () => {
     getOrder(
       id,
       data => setOrder(data),
-      requestError => setError(requestError.message)
+      Error => setError(Error.message)
     )
   }, [id])
 

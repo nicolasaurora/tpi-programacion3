@@ -116,11 +116,10 @@ const Register = () => {
                 handleNavLogin()
             },
             err => errorToast(err.message)
-        )
+        );
 
         
-
-        }
+    }
 
 
     return (
